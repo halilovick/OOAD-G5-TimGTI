@@ -9,7 +9,8 @@ Bilo da Vam treba svakodnevna vožnja do posla, vožnja izvan grada ili poseban 
 
 # Članovi tima
 
-- Kerim Halilović
-- Bakir Pljakić
-- Emir Kalajdžija
-- Emir Agović
+  * [Kerim Halilović](https://github.com/halilovick)
+  * [Bakir Pljakić](https://github.com/bakirpljakic)
+  * [Emir Kalajdžija](https://github.com/ekalajdzij)
+  * [Emir Agović](https://github.com/eagovic1)
+
