@@ -1,11 +1,15 @@
-﻿namespace VoziMe.Models {
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VoziMe.Models {
     public class Vozilo {
-        public int id;
-        public Proizvodjac proizvodjac;
-        public string model;
-        public int godinaProizvodnje;
-        public int registarskaOznaka;
-        public Boja boja;
-        public int brojSjedista;
+        public Vozilo() { }
+        [Key]
+        public int id { get; set; }
+        public Proizvodjac proizvodjac { get; set; }
+        public string model { get; set; }
+        public int godinaProizvodnje { get; set; }
+        public int registarskaOznaka { get; set; }
+        public Boja boja { get; set; }
+        public int brojSjedista { get; set; }
     }
 }
