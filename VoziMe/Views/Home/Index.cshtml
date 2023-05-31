@@ -20,7 +20,17 @@
     </div>
 </div>
 
-<div class="image-container">
-    <img src="/images/mapa.png" alt="Map">
-</div>
+<br />
 
+<div id="map" style="height: 400px;"></div>
+
+<script src="https://www.bing.com/api/maps/mapcontrol?key=AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        var map = new Microsoft.Maps.Map('#map', {
+            credentials: 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf',
+            center: new Microsoft.Maps.Location(43.856430, 18.413029), // Coordinates for San Francisco
+            zoom: 12
+        });
+    }
+</script>
