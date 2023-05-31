@@ -10,8 +10,8 @@ using VoziMe.Data;
 namespace VoziMe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230531141322_firstMigration")]
-    partial class firstMigration
+    [Migration("20230531194601_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,6 +221,203 @@ namespace VoziMe.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("VoziMe.Models.Firma", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("adresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("brojTelefona")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lozinka")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mailAdresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("odgovornaOsoba")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Firma");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Osoba", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("adresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("brojTelefona")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("datumRodjenja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("korisnickoIme")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lozinka")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mailAdresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("prezime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("spol")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Osoba");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.TaxiStajaliste", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("adresa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("brojMjesta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ime")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("TaxiStajaliste");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Vozilo", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("boja")
+                        .HasColumnType("int");
+
+                    b.Property<int>("brojSjedista")
+                        .HasColumnType("int");
+
+                    b.Property<int>("godinaProizvodnje")
+                        .HasColumnType("int");
+
+                    b.Property<string>("model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("proizvodjac")
+                        .HasColumnType("int");
+
+                    b.Property<int>("registarskaOznaka")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Vozilo");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Voznje", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("adresaDolazista")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("adresaPolazista")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("cijena")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("firmaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("korisnikId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocjena")
+                        .HasColumnType("int");
+
+                    b.Property<int>("vozacId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("voziloId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("vrijeme")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("firmaId");
+
+                    b.HasIndex("korisnikId");
+
+                    b.HasIndex("vozacId");
+
+                    b.HasIndex("voziloId");
+
+                    b.ToTable("Voznje");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Admin", b =>
+                {
+                    b.HasBaseType("VoziMe.Models.Osoba");
+
+                    b.ToTable("Admin");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Klijent", b =>
+                {
+                    b.HasBaseType("VoziMe.Models.Osoba");
+
+                    b.Property<int>("ocjena")
+                        .HasColumnType("int");
+
+                    b.ToTable("Klijent");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Vozac", b =>
+                {
+                    b.HasBaseType("VoziMe.Models.Osoba");
+
+                    b.Property<int>("brojVozackeDozvole")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocjena")
+                        .HasColumnType("int");
+
+                    b.ToTable("Vozac");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -269,6 +466,68 @@ namespace VoziMe.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Voznje", b =>
+                {
+                    b.HasOne("VoziMe.Models.Firma", "Firma")
+                        .WithMany()
+                        .HasForeignKey("firmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VoziMe.Models.Klijent", "Klijent")
+                        .WithMany()
+                        .HasForeignKey("korisnikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VoziMe.Models.Vozac", "Vozac")
+                        .WithMany()
+                        .HasForeignKey("vozacId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VoziMe.Models.Vozilo", "Vozilo")
+                        .WithMany()
+                        .HasForeignKey("voziloId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Firma");
+
+                    b.Navigation("Klijent");
+
+                    b.Navigation("Vozac");
+
+                    b.Navigation("Vozilo");
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Admin", b =>
+                {
+                    b.HasOne("VoziMe.Models.Osoba", null)
+                        .WithOne()
+                        .HasForeignKey("VoziMe.Models.Admin", "id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Klijent", b =>
+                {
+                    b.HasOne("VoziMe.Models.Osoba", null)
+                        .WithOne()
+                        .HasForeignKey("VoziMe.Models.Klijent", "id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VoziMe.Models.Vozac", b =>
+                {
+                    b.HasOne("VoziMe.Models.Osoba", null)
+                        .WithOne()
+                        .HasForeignKey("VoziMe.Models.Vozac", "id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -1,13 +1,14 @@
 ﻿using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace VoziMe.Models {
-    public class Osoba {
+    public abstract class Osoba {
         public Osoba() { }
         [Key]
         public int id { get; set; }
         public Spol spol { get; set; }
-        public DateAndTime datumRodjenja { get; set; }
+        public DateTime datumRodjenja { get; set; }
         public string ime { get; set; }
         public string prezime { get; set; }
         public string korisnickoIme { get; set; }

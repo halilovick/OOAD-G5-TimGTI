@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,7 @@ namespace VoziMe.Models {
     public class Voznje {
         public Voznje() { }
         [Key]
-        public int id;
+        public int id { get; set; }
         [ForeignKey("Vozac")]
         public int vozacId { get; set; }
         [ForeignKey("Klijent")]
@@ -15,7 +16,7 @@ namespace VoziMe.Models {
         public int firmaId { get; set; }
         [ForeignKey("Vozilo")]
         public int voziloId { get; set; }
-        public DateAndTime vrijeme { get; set; }
+        public DateTime vrijeme { get; set; }
         public int ocjena { get; set; }
         public decimal cijena { get; set; }
         public string adresaPolazista { get; set; }
