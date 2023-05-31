@@ -1,9 +1,16 @@
-﻿namespace VoziMe.Models {
+﻿using Microsoft.VisualBasic;
+
+namespace VoziMe.Models {
     public class Osoba {
-        string ime;
-        string prezime;
-        string korisnickoIme;
-        string lozinka;
-        string mailAdresa;
+        public int id;
+        public Spol spol;
+        public DateAndTime datumRodjenja;
+        public string ime;
+        public string prezime;
+        public string korisnickoIme;
+        public string lozinka;
+        public string mailAdresa;
+        public string adresa;
+        public string brojTelefona;
     }
 }

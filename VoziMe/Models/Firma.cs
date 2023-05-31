@@ -1,11 +1,11 @@
 ﻿namespace VoziMe.Models {
     public class Firma {
-        int id;
-        string ime;
-        string lozinka;
-        string mailAdresa;
-        string brojTelefona;
-        string adresa;
-        string odgovornaOsoba;
+        public int id;
+        public string ime;
+        public string lozinka;
+        public string mailAdresa;
+        public string brojTelefona;
+        public string adresa;
+        public string odgovornaOsoba;
     }
 }

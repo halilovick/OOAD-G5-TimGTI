@@ -2,9 +2,9 @@
 
 namespace VoziMe.Models {
     public class TaxiStajaliste {
-        int id;
-        Stajaliste ime;
-        string adresa;
-        int brojMjesta;
+        public int id;
+        public Stajaliste ime;
+        public string adresa;
+        public int brojMjesta;
     }
 }

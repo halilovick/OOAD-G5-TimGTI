@@ -2,16 +2,15 @@
 
 namespace VoziMe.Models {
     public class Voznje {
-        int id;
-        int vozacId;
-        int korisnikId;
-        int firmaId;
-        int voziloId;
-        // DateAndTime datum;
-        DateAndTime vrijeme;
-        int ocjena;
-        decimal cijena;
-        string adresaPolazista;
-        string adresaDolazista;
+        public int id;
+        public int vozacId;
+        public int korisnikId;
+        public int firmaId;
+        public int voziloId;
+        public DateAndTime vrijeme;
+        public int ocjena;
+        public decimal cijena;
+        public string adresaPolazista;
+        public string adresaDolazista;
     }
 }
