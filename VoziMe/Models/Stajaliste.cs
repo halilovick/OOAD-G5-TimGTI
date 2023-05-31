@@ -1,0 +1,5 @@
+﻿namespace VoziMe.Models {
+    public enum Stajaliste {
+        ALIPASINO_POLJE, BASCARSIJA, OTOKA, AERODROM, SKENDERIJA, BUCA_POTOK, MOJMILO, CENGIC_VILA, GRBAVICA, BREKA, JEZERO, KOSEVO
+    }
+}
