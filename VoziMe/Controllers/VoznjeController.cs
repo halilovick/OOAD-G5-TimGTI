@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje
+        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Voznje.Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
@@ -49,6 +51,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Create
+        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma")]
         public IActionResult Create()
         {
             ViewData["firmaId"] = new SelectList(_context.Firma, "id", "id");
