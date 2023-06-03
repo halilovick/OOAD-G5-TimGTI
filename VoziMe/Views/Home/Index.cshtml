@@ -22,15 +22,149 @@
 
 <br />
 
-<div id="map" style="height: 400px;"></div>
+<div style="margin-top: 2%; margin-bottom: 2%">
+    <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
+</div>
 
-<script src="https://www.bing.com/api/maps/mapcontrol?key=AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf&callback=initMap" async defer></script>
-<script>
-    function initMap() {
-        var map = new Microsoft.Maps.Map('#map', {
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+
+<script type='text/javascript'>
+    function GetMap() {
+        var map = new Microsoft.Maps.Map('#myMap', {
             credentials: 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf',
             center: new Microsoft.Maps.Location(43.856430, 18.413029),
-            zoom: 12
+            mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+            zoom: 15
         });
+
+        infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
+            visible: false
+        });
+
+        infobox.setMap(map);
+
+        var stajalisteKosevo = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteSkenderija = new Microsoft.Maps.Location(43.855878, 18.413731);
+        var stajalisteJezero = new Microsoft.Maps.Location(43.872944, 18.411922);
+        var stajalisteBreka = new Microsoft.Maps.Location(43.871769, 18.415377);
+        var stajalisteGrbavica = new Microsoft.Maps.Location(43.849967, 18.395938);
+        
+        var stajalisteCengicVila = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteMojmilo = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteBucaPotok = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteAerodrom = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteOtoka = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteBascarsija = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteAlipasinoPolje = new Microsoft.Maps.Location(43.859889, 18.414403);
+
+        var pinKosevo = new Microsoft.Maps.Pushpin(stajalisteKosevo);
+        var pinSkenderija = new Microsoft.Maps.Pushpin(stajalisteSkenderija);
+        var pinJezero = new Microsoft.Maps.Pushpin(stajalisteJezero);
+        var pinBreka = new Microsoft.Maps.Pushpin(stajalisteBreka);
+        var pinGrbavica = new Microsoft.Maps.Pushpin(stajalisteGrbavica);
+        var pinCengicVila = new Microsoft.Maps.Pushpin(stajalisteCengicVila);
+        var pinMojmilo = new Microsoft.Maps.Pushpin(stajalisteMojmilo);
+        var pinBucaPotok = new Microsoft.Maps.Pushpin(stajalisteBucaPotok);
+        var pinAerodrom = new Microsoft.Maps.Pushpin(stajalisteAerodrom);
+        var pinOtoka = new Microsoft.Maps.Pushpin(stajalisteOtoka);
+        var pinBascarsija = new Microsoft.Maps.Pushpin(stajalisteBascarsija);
+        var pinAlipasinoPolje = new Microsoft.Maps.Pushpin(stajalisteAlipasinoPolje);
+
+        pinKosevo.metadata = {
+            title: 'Stajaliste Koševo',
+            description: ''
+        };
+
+        pinSkenderija.metadata = {
+            title: 'Stajalište Skenderija',
+            description: ''
+        };
+
+        pinJezero.metadata = {
+            title: 'Stajalište Jezero',
+            description: ''
+        };
+
+        pinBreka.metadata = {
+            title: 'Stajalište Breka',
+            description: ''
+        };
+
+        pinGrbavica.metadata = {
+            title: 'Stajalište Grbavica',
+            description: ''
+        };
+
+        pinCengicVila.metadata = {
+            title: 'Stajalište Čengić Vila',
+            description: ''
+        };
+
+        pinMojmilo.metadata = {
+            title: 'Stajalište Mojmilo',
+            description: ''
+        };
+
+        pinBucaPotok.metadata = {
+            title: 'Stajalište Buća Potok',
+            description: ''
+        };
+
+        pinAerodrom.metadata = {
+            title: 'Stajalište Aerodrom',
+            description: ''
+        };
+
+        pinOtoka.metadata = {
+            title: 'Stajalište Otoka',
+            description: ''
+        };
+
+        pinBascarsija.metadata = {
+            title: 'Stajalište Baščaršija',
+            description: ''
+        };
+
+        pinAlipasinoPolje.metadata = {
+            title: 'Stajalište Alipašino Polje',
+            description: ''
+        };
+
+        Microsoft.Maps.Events.addHandler(pinKosevo, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinSkenderija, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinJezero, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinBreka, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinGrbavica, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinCengicVila, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinMojmilo, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinBucaPotok, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinAerodrom, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinOtoka, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinBascarsija, 'click', pushpinClicked);
+        Microsoft.Maps.Events.addHandler(pinAlipasinoPolje, 'click', pushpinClicked);
+
+        map.entities.push(pinKosevo);
+        map.entities.push(pinSkenderija);
+        map.entities.push(pinJezero);
+        map.entities.push(pinBreka);
+        map.entities.push(pinGrbavica);
+        map.entities.push(pinCengicVila);
+        map.entities.push(pinMojmilo);
+        map.entities.push(pinBucaPotok);
+        map.entities.push(pinAerodrom);
+        map.entities.push(pinOtoka);
+        map.entities.push(pinBascarsija);
+        map.entities.push(pinAlipasinoPolje);
+    }
+
+    function pushpinClicked(e) {
+        if (e.target.metadata) {
+            infobox.setOptions({
+                location: e.target.getLocation(),
+                title: e.target.metadata.title,
+                description: e.target.metadata.description,
+                visible: true
+            });
+        }
     }
 </script>
