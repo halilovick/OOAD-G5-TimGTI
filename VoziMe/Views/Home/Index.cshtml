@@ -9,10 +9,12 @@
     }
 </style>
 
-<div style="display: flex; justify-content: center;">
+
+<div style="display: flex; justify-content: center; align-items: center;">
     <div style="margin-right: 10px;">
         <h3>Vaša adresa:</h3>
-        <input type="text" id="startLocation" name="startLocation">
+        <input type="text" id="startLocation" name="startLocation" readonly>
+        <button onclick="getLocation()">Get location</button>
     </div>
     <div style="margin-left: 20px;">
         <h3>Gdje putujete?</h3>
@@ -21,6 +23,14 @@
 </div>
 
 <br />
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <div>
+        <button id="order-ride-button" style="padding: 10px 20px; background-color: #00d0ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Naruci voznju!</button>
+    </div>
+</div>
+
+<p id="demo"></p>
 
 <div style="margin-top: 2%; margin-bottom: 2%">
     <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
@@ -48,14 +58,13 @@
         var stajalisteJezero = new Microsoft.Maps.Location(43.872944, 18.411922);
         var stajalisteBreka = new Microsoft.Maps.Location(43.871769, 18.415377);
         var stajalisteGrbavica = new Microsoft.Maps.Location(43.849967, 18.395938);
-        
-        var stajalisteCengicVila = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteMojmilo = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteBucaPotok = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteAerodrom = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteOtoka = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteBascarsija = new Microsoft.Maps.Location(43.859889, 18.414403);
-        var stajalisteAlipasinoPolje = new Microsoft.Maps.Location(43.859889, 18.414403);
+        var stajalisteCengicVila = new Microsoft.Maps.Location(43.851362, 18.379178);
+        var stajalisteMojmilo = new Microsoft.Maps.Location(43.838236, 18.346111);
+        var stajalisteBucaPotok = new Microsoft.Maps.Location(43.857733, 18.365418);
+        var stajalisteAerodrom = new Microsoft.Maps.Location(43.826781, 18.337007);
+        var stajalisteOtoka = new Microsoft.Maps.Location(43.849521, 18.366525);
+        var stajalisteBascarsija = new Microsoft.Maps.Location(43.860680, 18.431423);
+        var stajalisteAlipasinoPolje = new Microsoft.Maps.Location(43.844544, 18.347990);
 
         var pinKosevo = new Microsoft.Maps.Pushpin(stajalisteKosevo);
         var pinSkenderija = new Microsoft.Maps.Pushpin(stajalisteSkenderija);
@@ -155,6 +164,13 @@
         map.entities.push(pinOtoka);
         map.entities.push(pinBascarsija);
         map.entities.push(pinAlipasinoPolje);
+
+        var orderRideButton = document.getElementById('order-ride-button');
+        orderRideButton.addEventListener('click', function () {
+            // Handle the button click event
+            // Implement the logic to order a ride
+            alert('Ride ordered!');
+        });
     }
 
     function pushpinClicked(e) {
@@ -166,5 +182,33 @@
                 visible: true
             });
         }
+    }
+
+    var x = document.getElementById("demo");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(convertCoordinates);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function convertCoordinates(position) {
+        var latitude = position.coords.latitude; // Replace with the actual latitude
+        var longitude = position.coords.longitude; // Replace with the actual longitude
+
+        var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf'; // Replace with your actual Bing Maps API key
+
+        var apiUrl = `https://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?key=${apiKey}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                var address = data.resourceSets[0].resources[0].address.formattedAddress;
+                document.getElementById('startLocation').value = address;
+                //showPosition(address);
+            })
+            .catch(error => console.log(error));
     }
 </script>
