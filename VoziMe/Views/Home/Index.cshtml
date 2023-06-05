@@ -167,8 +167,6 @@
 
         var orderRideButton = document.getElementById('order-ride-button');
         orderRideButton.addEventListener('click', function () {
-            // Handle the button click event
-            // Implement the logic to order a ride
             alert('Ride ordered!');
         });
     }
@@ -195,10 +193,10 @@
     }
 
     function convertCoordinates(position) {
-        var latitude = position.coords.latitude; // Replace with the actual latitude
-        var longitude = position.coords.longitude; // Replace with the actual longitude
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude; 
 
-        var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf'; // Replace with your actual Bing Maps API key
+        var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf';
 
         var apiUrl = `https://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?key=${apiKey}`;
 
@@ -207,7 +205,6 @@
             .then(data => {
                 var address = data.resourceSets[0].resources[0].address.formattedAddress;
                 document.getElementById('startLocation').value = address;
-                //showPosition(address);
             })
             .catch(error => console.log(error));
     }
