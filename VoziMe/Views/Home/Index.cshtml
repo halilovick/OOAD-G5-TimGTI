@@ -26,15 +26,15 @@
 
 <div style="display: flex; flex-direction: column; align-items: center;">
     <div>
-        <button id="order-ride-button" style="padding: 10px 20px; background-color: #00d0ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Naruci voznju!</button>
+        <button id="order-ride-button" onclick="showRideDetails()" style="padding: 10px 20px; background-color: #00d0ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Naruči vožnju!</button>
     </div>
 </div>
-
-<p id="demo"></p>
 
 <div style="margin-top: 2%; margin-bottom: 2%">
     <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
 </div>
+
+<div id="rideDetails"></div>
 
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 
@@ -166,8 +166,17 @@
         map.entities.push(pinAlipasinoPolje);
 
         var orderRideButton = document.getElementById('order-ride-button');
+        var locationField = document.getElementById('startLocation');
+        var destinationField = document.getElementById('destination');
+
         orderRideButton.addEventListener('click', function () {
-            alert('Ride ordered!');
+            var destinationValue = destinationField.value;
+            var locationValue = locationField.value;
+            if (destinationValue === "" || locationValue === "") {
+                alert('Ni jedno polje ne može biti prazno!');
+            } else {
+                alert('Vožnja naručena!');
+            }
         });
     }
 
@@ -182,13 +191,9 @@
         }
     }
 
-    var x = document.getElementById("demo");
-
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(convertCoordinates);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
         }
     }
 
@@ -207,5 +212,28 @@
                 document.getElementById('startLocation').value = address;
             })
             .catch(error => console.log(error));
+    }
+
+    function showRideDetails() {
+        var startLocation = document.getElementById("startLocation").value;
+        var destination = document.getElementById("destination").value;
+
+        // implementirat tako da izvuce random vozaca iz baze
+        var driverName = "Ime prezime";
+        var carModel = "Volkswagen Passat";
+        var licensePlate = "E90-M-775";
+
+        var detailsContainer = document.getElementById("rideDetails");
+        detailsContainer.innerHTML = `
+                    <h3>Detalji o vašem vozaču:</h3>
+                    <p>Ime: ${driverName}</p>
+                    <p>Automobil: ${carModel}</p>
+                    <p>Registracijske oznake: ${licensePlate}</p>
+                    <h3>Detalji o vožnji:</h3>
+                    <p>Adresa polaska: ${startLocation}</p>
+                    <p>Adresa odredišta: ${destination}</p>
+                `;
+
+        detailsContainer.scrollIntoView();
     }
 </script>
