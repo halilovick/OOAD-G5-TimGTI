@@ -47,7 +47,7 @@ namespace VoziMe.Controllers
         public IActionResult Create()
         {
             if(klijentLokalno != null){ // Ukoliko je vec unio podatke
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Edit", "Klijent", new { id = klijentLokalno.id});
             }
             return View();
         }
