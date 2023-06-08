@@ -21,7 +21,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje
-        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma")]
+        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma, Klijent")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Voznje.Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
@@ -51,7 +51,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Create
-        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma")]
+        [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma, Klijent")]
         public IActionResult Create()
         {
             ViewData["firmaId"] = new SelectList(_context.Firma, "id", "id");

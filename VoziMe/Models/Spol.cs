@@ -1,5 +1,11 @@
-﻿namespace VoziMe.Models {
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace VoziMe.Models {
     public enum Spol {
-        MUSKO, ZENSKO
+        [Display(Name = "Muškarac")]
+        MUSKO,
+        [Display(Name = "Žena")]
+        ZENSKO
     }
 }
