@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoziMe.Data;
+using VoziMe.Models;
 
 namespace VoziMe {
     public class Startup {
@@ -34,6 +35,8 @@ namespace VoziMe {
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddSingleton<Klijent>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

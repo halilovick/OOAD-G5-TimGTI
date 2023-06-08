@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace VoziMe.Controllers
     public class KlijentController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        public static Klijent klijentLokalno;
 
         public KlijentController(ApplicationDbContext context)
         {
@@ -45,6 +46,10 @@ namespace VoziMe.Controllers
         // GET: Klijent/Create
         public IActionResult Create()
         {
+            if(klijentLokalno != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -59,6 +64,8 @@ namespace VoziMe.Controllers
             {
                 _context.Add(klijent);
                 await _context.SaveChangesAsync();
+                klijentLokalno = klijent;
+                //Console.Write(klijentLokalno.ToString());
                 return RedirectToAction("Index", "Home");
             }
             return View(klijent);
