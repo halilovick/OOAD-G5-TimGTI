@@ -2,4 +2,5 @@
     public class Admin : Osoba{
         public Admin() { }
     }
+    //proba
 }
