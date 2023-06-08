@@ -1,4 +1,9 @@
-﻿@model VoziMe.Models.Klijent
+﻿<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+@model VoziMe.Models.Klijent
 
 @{
     ViewData["Title"] = "Create";
@@ -7,79 +12,92 @@
 <h1>Unesite vaše podatke</h1>
 
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="ime" class="control-label"></label>
+                <label asp-for="ime" class="control-label">Ime</label>
                 <input asp-for="ime" class="form-control" />
                 <span asp-validation-for="ime" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="prezime" class="control-label"></label>
+                <label asp-for="prezime" class="control-label">Prezime</label>
                 <input asp-for="prezime" class="form-control" />
                 <span asp-validation-for="prezime" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="korisnickoIme" class="control-label"></label>
+                <label asp-for="korisnickoIme" class="control-label">Korisničko ime</label>
                 <input asp-for="korisnickoIme" class="form-control" />
                 <span asp-validation-for="korisnickoIme" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="lozinka" class="control-label"></label>
+                <label asp-for="lozinka" class="control-label">Lozinka</label>
                 <input asp-for="lozinka" class="form-control" />
                 <span asp-validation-for="lozinka" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="spol" class="control-label"></label>
+                <label asp-for="spol" class="control-label">Spol</label>
                 <select asp-for="spol" asp-items="Html.GetEnumSelectList<Spol>()">
-                    <option selected="selected" value="">Please select</option>
+                    <option selected="selected" value="">Odaberite opciju</option>
                 </select>
                 <span asp-validation-for="spol" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="datumRodjenja" class="control-label"></label>
+                <label asp-for="datumRodjenja" class="control-label">Datum rodjenja</label>
                 <input asp-for="datumRodjenja" class="form-control" />
                 <span asp-validation-for="datumRodjenja" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="mailAdresa" class="control-label"></label>
+                <label asp-for="mailAdresa" class="control-label">Mail adresa</label>
                 <input asp-for="mailAdresa" class="form-control" />
                 <span asp-validation-for="mailAdresa" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="adresa" class="control-label"></label>
+                <label asp-for="adresa" class="control-label">Adresa</label>
                 <input asp-for="adresa" class="form-control" />
                 <span asp-validation-for="adresa" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="brojTelefona" class="control-label"></label>
+                <label asp-for="brojTelefona" class="control-label">Kontakt telefon</label>
                 <input asp-for="brojTelefona" class="form-control" />
                 <span asp-validation-for="brojTelefona" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="ocjena" class="control-label"></label>
+                <label asp-for="ocjena" class="control-label">Ocjena</label>
                 <input asp-for="ocjena" class="form-control" />
                 <span asp-validation-for="ocjena" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" id = "createButton" onclick="createClick()"/>
+                <input type="submit" value="Create" class="btn btn-primary" id="createButton" onclick="createClick()" />
             </div>
         </form>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
 <script>
-    function createClick(){
+    function createClick() {
         var createButton = document.getElementById('createButton');
         createButton.addEventListener('click', function () {
             alert('Podaci ažurirani!');
         });
     }
 </script>
-}
