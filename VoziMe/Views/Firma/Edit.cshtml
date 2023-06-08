@@ -1,4 +1,9 @@
-﻿@model VoziMe.Models.Firma
+﻿<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+@model VoziMe.Models.Firma
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,32 +19,32 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="ime" class="control-label"></label>
+                <label asp-for="ime" class="control-label">Ime preduzeća</label>
                 <input asp-for="ime" class="form-control" />
                 <span asp-validation-for="ime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="lozinka" class="control-label"></label>
+                <label asp-for="lozinka" class="control-label">Lozinka</label>
                 <input asp-for="lozinka" class="form-control" />
                 <span asp-validation-for="lozinka" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="mailAdresa" class="control-label"></label>
+                <label asp-for="mailAdresa" class="control-label">Mail adresa</label>
                 <input asp-for="mailAdresa" class="form-control" />
                 <span asp-validation-for="mailAdresa" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="brojTelefona" class="control-label"></label>
+                <label asp-for="brojTelefona" class="control-label">Kontakt telefon</label>
                 <input asp-for="brojTelefona" class="form-control" />
                 <span asp-validation-for="brojTelefona" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="adresa" class="control-label"></label>
+                <label asp-for="adresa" class="control-label">Adresa preduzeća</label>
                 <input asp-for="adresa" class="form-control" />
                 <span asp-validation-for="adresa" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="odgovornaOsoba" class="control-label"></label>
+                <label asp-for="odgovornaOsoba" class="control-label">Odgovorna osoba</label>
                 <input asp-for="odgovornaOsoba" class="form-control" />
                 <span asp-validation-for="odgovornaOsoba" class="text-danger"></span>
             </div>
