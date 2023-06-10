@@ -215,6 +215,7 @@
     }
 
     function showRideDetails() {
+        if (destinationValue === "" || locationValue === "") return;
         var startLocation = document.getElementById("startLocation").value;
         var destination = document.getElementById("destination").value;
 

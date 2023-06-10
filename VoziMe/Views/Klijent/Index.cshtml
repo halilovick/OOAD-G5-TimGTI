@@ -4,23 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Klijenti</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Dodaj klijenta</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Ocjena
-            </th>
-            <th>
-                Spol
-            </th>
-            <th>
-                Datum rodjenja
-            </th>
             <th>
                 Ime
             </th>
@@ -37,10 +28,19 @@
                 Mail adresa
             </th>
             <th>
+                Spol
+            </th>
+            <th>
+                Datum rodjenja
+            </th>
+            <th>
                 Adresa
             </th>
             <th>
                 Kontakt telefon
+            </th>
+            <th>
+                Ocjena
             </th>
             <th></th>
         </tr>
@@ -48,15 +48,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ocjena)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.spol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.datumRodjenja)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ime)
             </td>
@@ -73,15 +64,24 @@
                 @Html.DisplayFor(modelItem => item.mailAdresa)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.spol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datumRodjenja)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.adresa)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.brojTelefona)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                @Html.DisplayFor(modelItem => item.ocjena)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Uredi</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Obriši</a>
             </td>
         </tr>
 }
