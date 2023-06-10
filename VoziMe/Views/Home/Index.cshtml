@@ -215,9 +215,9 @@
     }
 
     function showRideDetails() {
-        if (destinationValue === "" || locationValue === "") return;
         var startLocation = document.getElementById("startLocation").value;
         var destination = document.getElementById("destination").value;
+        if (destination === "" || startLocation === "") return;
 
         // implementirat tako da izvuce random vozaca iz baze
         var driverName = "Aaa";
@@ -236,5 +236,32 @@
                 `;
 
         detailsContainer.scrollIntoView();
+
+        
+        $.ajax({
+            url: '/Voznje/Create',
+            type: 'POST',
+            data: {
+                vozacId: '1',
+                korisnikId: '2',
+                firmaId: '1',
+                voziloId: '1',
+                vrijeme: null,
+                ocjena: 5,
+                cijena: 10,
+                adresaPolazista: 'Start Address',
+                adresaDolazista: 'End Address'
+            },
+            success: function (response) {
+                // Handle success response
+                console.log('Ride added successfully!');
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.log('Error adding ride:', error);
+                console.log('Error adding ride:', status);
+                console.log('Error adding ride:', xhr);
+            }
+        });
     }
 </script>
