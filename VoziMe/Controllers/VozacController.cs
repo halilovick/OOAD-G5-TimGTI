@@ -23,7 +23,6 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac
-        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Vozac.Include(v => v.Firma).Include(v => v.Vozilo);

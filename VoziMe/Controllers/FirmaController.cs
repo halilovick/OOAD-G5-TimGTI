@@ -22,7 +22,6 @@ namespace VoziMe.Controllers
         }
 
         // GET: Firma
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Firma.ToListAsync());

@@ -47,7 +47,7 @@ namespace VoziMe.Controllers {
             cijena = Math.Round(cijena, 2);
             var newVoznje = new Voznje {
                 vozacId = najbliziVozac.id,
-                korisnikId = 6,
+                korisnikId = KlijentController.klijentLokalno.id,
                 vrijeme = DateTime.Now,
                 ocjena = -1,
                 cijena = (decimal)cijena,
@@ -58,9 +58,10 @@ namespace VoziMe.Controllers {
             _context.Voznje.Add(newVoznje);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(OrderConfirmation));
+            return RedirectToAction(nameof(VoznjeController.OrderConfirmation));
         }
 
+        [HttpGet]
         public IActionResult OrderConfirmation() {
             var lastOrderedRide = _context.Voznje.OrderByDescending(v => v.id).FirstOrDefault();
 
@@ -79,7 +80,8 @@ namespace VoziMe.Controllers {
 
         // GET: Voznje
         public async Task<IActionResult> Index() {
-            var applicationDbContext = _context.Voznje.Include(v => v.Klijent).Include(v => v.Vozac);
+            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
+            var applicationDbContext = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Klijent).Include(v => v.Vozac);
             return View(await applicationDbContext.ToListAsync());
         }
 
