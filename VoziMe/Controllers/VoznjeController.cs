@@ -44,7 +44,8 @@ namespace VoziMe.Controllers
 
             var vozaci = _context.Vozac.ToList();
             var najbliziVozac = vozaci.OrderBy(vozac => Distance(x, y, vozac.xkord, vozac.ykord)).FirstOrDefault();
-            var cijena = 2.5 + 1.5 * Distance(x, y, najbliziVozac.xkord, najbliziVozac.ykord);
+            //var cijena = 2.5 + 1.5 * Distance(x, y, najbliziVozac.xkord, najbliziVozac.ykord);
+            var cijena = new Random().NextDouble() * 20 + 5;
             cijena = Math.Round(cijena, 2);
             var newVoznje = new Voznje {
                 vozacId = najbliziVozac.id,
