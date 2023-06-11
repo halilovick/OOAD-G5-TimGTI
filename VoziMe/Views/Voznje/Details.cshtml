@@ -4,68 +4,57 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Detalji</h1>
+<h1>Details</h1>
 
 <div>
+    <h4>Voznje</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            Vrijeme vožnje
+            @Html.DisplayNameFor(model => model.vrijeme)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.vrijeme)
         </dd>
         <dt class = "col-sm-2">
-            Ocjena
+            @Html.DisplayNameFor(model => model.ocjena)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ocjena)
         </dd>
         <dt class = "col-sm-2">
-            Cijena
+            @Html.DisplayNameFor(model => model.cijena)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.cijena)
         </dd>
         <dt class = "col-sm-2">
-            Adresa polazišta
+            @Html.DisplayNameFor(model => model.adresaPolazista)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.adresaPolazista)
         </dd>
         <dt class = "col-sm-2">
-            Adresa odredišta
+            @Html.DisplayNameFor(model => model.adresaDolazista)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.adresaDolazista)
         </dd>
         <dt class = "col-sm-2">
-            Firma
+            @Html.DisplayNameFor(model => model.Klijent)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Firma.id)
-        </dd class>
+            @Html.DisplayFor(model => model.Klijent.adresa)
+        </dd>
         <dt class = "col-sm-2">
-            Vozilo
+            @Html.DisplayNameFor(model => model.Vozac)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vozilo.id)
-        </dd class>
-        <dt class = "col-sm-2">
-            Klijent
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Klijent.id)
-        </dd class>
-        <dt class = "col-sm-2">
-            Vozač
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vozac.id)
-        </dd class>
+            @Html.DisplayFor(model => model.Vozac.adresa)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Uredi</a> |
-    <a asp-action="Index">Nazad na listu</a>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

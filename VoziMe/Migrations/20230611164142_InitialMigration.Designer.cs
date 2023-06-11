@@ -10,8 +10,8 @@ using VoziMe.Data;
 namespace VoziMe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230611100009_AddedCoords")]
-    partial class AddedCoords
+    [Migration("20230611164142_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -376,9 +376,6 @@ namespace VoziMe.Migrations
                     b.Property<decimal>("cijena")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("firmaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("korisnikId")
                         .HasColumnType("int");
 
@@ -388,21 +385,14 @@ namespace VoziMe.Migrations
                     b.Property<int>("vozacId")
                         .HasColumnType("int");
 
-                    b.Property<int>("voziloId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("vrijeme")
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
 
-                    b.HasIndex("firmaId");
-
                     b.HasIndex("korisnikId");
 
                     b.HasIndex("vozacId");
-
-                    b.HasIndex("voziloId");
 
                     b.ToTable("Voznje");
                 });
@@ -431,7 +421,13 @@ namespace VoziMe.Migrations
                     b.Property<int>("brojVozackeDozvole")
                         .HasColumnType("int");
 
+                    b.Property<int>("firmaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ocjena")
+                        .HasColumnType("int");
+
+                    b.Property<int>("voziloId")
                         .HasColumnType("int");
 
                     b.Property<double>("xkord")
@@ -439,6 +435,10 @@ namespace VoziMe.Migrations
 
                     b.Property<double>("ykord")
                         .HasColumnType("float");
+
+                    b.HasIndex("firmaId");
+
+                    b.HasIndex("voziloId");
 
                     b.ToTable("Vozac");
                 });
@@ -496,12 +496,6 @@ namespace VoziMe.Migrations
 
             modelBuilder.Entity("VoziMe.Models.Voznje", b =>
                 {
-                    b.HasOne("VoziMe.Models.Firma", "Firma")
-                        .WithMany()
-                        .HasForeignKey("firmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("VoziMe.Models.Klijent", "Klijent")
                         .WithMany()
                         .HasForeignKey("korisnikId")
@@ -514,19 +508,9 @@ namespace VoziMe.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VoziMe.Models.Vozilo", "Vozilo")
-                        .WithMany()
-                        .HasForeignKey("voziloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Firma");
-
                     b.Navigation("Klijent");
 
                     b.Navigation("Vozac");
-
-                    b.Navigation("Vozilo");
                 });
 
             modelBuilder.Entity("VoziMe.Models.Admin", b =>
@@ -549,11 +533,27 @@ namespace VoziMe.Migrations
 
             modelBuilder.Entity("VoziMe.Models.Vozac", b =>
                 {
+                    b.HasOne("VoziMe.Models.Firma", "Firma")
+                        .WithMany()
+                        .HasForeignKey("firmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VoziMe.Models.Osoba", null)
                         .WithOne()
                         .HasForeignKey("VoziMe.Models.Vozac", "id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("VoziMe.Models.Vozilo", "Vozilo")
+                        .WithMany()
+                        .HasForeignKey("voziloId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Firma");
+
+                    b.Navigation("Vozilo");
                 });
 #pragma warning restore 612, 618
         }

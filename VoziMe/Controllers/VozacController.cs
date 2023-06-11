@@ -22,7 +22,8 @@ namespace VoziMe.Controllers
         // GET: Vozac
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vozac.ToListAsync());
+            var applicationDbContext = _context.Vozac.Include(v => v.Firma).Include(v => v.Vozilo);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Vozac/Details/5
@@ -34,6 +35,8 @@ namespace VoziMe.Controllers
             }
 
             var vozac = await _context.Vozac
+                .Include(v => v.Firma)
+                .Include(v => v.Vozilo)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (vozac == null)
             {
@@ -46,6 +49,8 @@ namespace VoziMe.Controllers
         // GET: Vozac/Create
         public IActionResult Create()
         {
+            ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa");
+            ViewData["voziloId"] = new SelectList(_context.Vozilo, "id", "model");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
+        public async Task<IActionResult> Create([Bind("firmaId,voziloId,brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace VoziMe.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa", vozac.firmaId);
+            ViewData["voziloId"] = new SelectList(_context.Vozilo, "id", "model", vozac.voziloId);
             return View(vozac);
         }
 
@@ -78,6 +85,8 @@ namespace VoziMe.Controllers
             {
                 return NotFound();
             }
+            ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa", vozac.firmaId);
+            ViewData["voziloId"] = new SelectList(_context.Vozilo, "id", "model", vozac.voziloId);
             return View(vozac);
         }
 
@@ -86,7 +95,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
+        public async Task<IActionResult> Edit(int id, [Bind("firmaId,voziloId,brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (id != vozac.id)
             {
@@ -113,6 +122,8 @@ namespace VoziMe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa", vozac.firmaId);
+            ViewData["voziloId"] = new SelectList(_context.Vozilo, "id", "model", vozac.voziloId);
             return View(vozac);
         }
 
@@ -125,6 +136,8 @@ namespace VoziMe.Controllers
             }
 
             var vozac = await _context.Vozac
+                .Include(v => v.Firma)
+                .Include(v => v.Vozilo)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (vozac == null)
             {

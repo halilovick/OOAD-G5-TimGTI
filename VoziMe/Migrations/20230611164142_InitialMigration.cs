@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VoziMe.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,12 +52,12 @@ namespace VoziMe.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    lozinka = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    lozinka = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    brojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     mailAdresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    brojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    odgovornaOsoba = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    odgovornaOsoba = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,13 +72,13 @@ namespace VoziMe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     spol = table.Column<int>(type: "int", nullable: false),
                     datumRodjenja = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    prezime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    korisnickoIme = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    lozinka = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    mailAdresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    brojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    prezime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    korisnickoIme = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    lozinka = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    mailAdresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    brojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,7 @@ namespace VoziMe.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ime = table.Column<int>(type: "int", nullable: false),
-                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     brojMjesta = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -107,9 +107,9 @@ namespace VoziMe.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     proizvodjac = table.Column<int>(type: "int", nullable: false),
-                    model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     godinaProizvodnje = table.Column<int>(type: "int", nullable: false),
-                    registarskaOznaka = table.Column<int>(type: "int", nullable: false),
+                    registarskaOznaka = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     boja = table.Column<int>(type: "int", nullable: false),
                     brojSjedista = table.Column<int>(type: "int", nullable: false)
                 },
@@ -264,18 +264,34 @@ namespace VoziMe.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false),
+                    firmaId = table.Column<int>(type: "int", nullable: false),
+                    voziloId = table.Column<int>(type: "int", nullable: false),
                     brojVozackeDozvole = table.Column<int>(type: "int", nullable: false),
-                    ocjena = table.Column<int>(type: "int", nullable: false)
+                    ocjena = table.Column<int>(type: "int", nullable: false),
+                    xkord = table.Column<double>(type: "float", nullable: false),
+                    ykord = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vozac", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Vozac_Firma_firmaId",
+                        column: x => x.firmaId,
+                        principalTable: "Firma",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Vozac_Osoba_id",
                         column: x => x.id,
                         principalTable: "Osoba",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vozac_Vozilo_voziloId",
+                        column: x => x.voziloId,
+                        principalTable: "Vozilo",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,8 +302,6 @@ namespace VoziMe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     vozacId = table.Column<int>(type: "int", nullable: false),
                     korisnikId = table.Column<int>(type: "int", nullable: false),
-                    firmaId = table.Column<int>(type: "int", nullable: false),
-                    voziloId = table.Column<int>(type: "int", nullable: false),
                     vrijeme = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ocjena = table.Column<int>(type: "int", nullable: false),
                     cijena = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -298,12 +312,6 @@ namespace VoziMe.Migrations
                 {
                     table.PrimaryKey("PK_Voznje", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Voznje_Firma_firmaId",
-                        column: x => x.firmaId,
-                        principalTable: "Firma",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Voznje_Klijent_korisnikId",
                         column: x => x.korisnikId,
                         principalTable: "Klijent",
@@ -313,12 +321,6 @@ namespace VoziMe.Migrations
                         name: "FK_Voznje_Vozac_vozacId",
                         column: x => x.vozacId,
                         principalTable: "Vozac",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Voznje_Vozilo_voziloId",
-                        column: x => x.voziloId,
-                        principalTable: "Vozilo",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -363,9 +365,14 @@ namespace VoziMe.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Voznje_firmaId",
-                table: "Voznje",
+                name: "IX_Vozac_firmaId",
+                table: "Vozac",
                 column: "firmaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vozac_voziloId",
+                table: "Vozac",
+                column: "voziloId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Voznje_korisnikId",
@@ -376,11 +383,6 @@ namespace VoziMe.Migrations
                 name: "IX_Voznje_vozacId",
                 table: "Voznje",
                 column: "vozacId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Voznje_voziloId",
-                table: "Voznje",
-                column: "voziloId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -416,19 +418,19 @@ namespace VoziMe.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Firma");
-
-            migrationBuilder.DropTable(
                 name: "Klijent");
 
             migrationBuilder.DropTable(
                 name: "Vozac");
 
             migrationBuilder.DropTable(
-                name: "Vozilo");
+                name: "Firma");
 
             migrationBuilder.DropTable(
                 name: "Osoba");
+
+            migrationBuilder.DropTable(
+                name: "Vozilo");
         }
     }
 }

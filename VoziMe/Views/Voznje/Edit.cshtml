@@ -4,8 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Uredi</h1>
+<h1>Edit</h1>
 
+<h4>Voznje</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -13,59 +14,49 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="vozacId" class="control-label">Vozač id</label>
+                <label asp-for="vozacId" class="control-label"></label>
                 <select asp-for="vozacId" class="form-control" asp-items="ViewBag.vozacId"></select>
                 <span asp-validation-for="vozacId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="korisnikId" class="control-label">Korisnik id</label>
+                <label asp-for="korisnikId" class="control-label"></label>
                 <select asp-for="korisnikId" class="form-control" asp-items="ViewBag.korisnikId"></select>
                 <span asp-validation-for="korisnikId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="firmaId" class="control-label">Firma id</label>
-                <select asp-for="firmaId" class="form-control" asp-items="ViewBag.firmaId"></select>
-                <span asp-validation-for="firmaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="voziloId" class="control-label">Vozilo id</label>
-                <select asp-for="voziloId" class="form-control" asp-items="ViewBag.voziloId"></select>
-                <span asp-validation-for="voziloId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="vrijeme" class="control-label">Vrijeme</label>
+                <label asp-for="vrijeme" class="control-label"></label>
                 <input asp-for="vrijeme" class="form-control" />
                 <span asp-validation-for="vrijeme" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ocjena" class="control-label">Ocjena</label>
+                <label asp-for="ocjena" class="control-label"></label>
                 <input asp-for="ocjena" class="form-control" />
                 <span asp-validation-for="ocjena" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="cijena" class="control-label">Cijena</label>
+                <label asp-for="cijena" class="control-label"></label>
                 <input asp-for="cijena" class="form-control" />
                 <span asp-validation-for="cijena" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="adresaPolazista" class="control-label">Adresa polazišta</label>
+                <label asp-for="adresaPolazista" class="control-label"></label>
                 <input asp-for="adresaPolazista" class="form-control" />
                 <span asp-validation-for="adresaPolazista" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="adresaDolazista" class="control-label">Adresa odredišta</label>
+                <label asp-for="adresaDolazista" class="control-label"></label>
                 <input asp-for="adresaDolazista" class="form-control" />
                 <span asp-validation-for="adresaDolazista" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Spasi" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Nazad na listu</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

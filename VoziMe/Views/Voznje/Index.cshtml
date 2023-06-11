@@ -1,46 +1,37 @@
 ﻿@model IEnumerable<VoziMe.Models.Voznje>
 
 @{
-    ViewData["Title"] = "Historija vožnji";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Historija vožnji</h1>
+<h1>Index</h1>
 
 <p>
-    @if (User.IsInRole("Administrator"))
-    {
-        <a asp-action="Create">Dodaj vožnju</a>
-    }
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Vrijeme
+                @Html.DisplayNameFor(model => model.vrijeme)
             </th>
             <th>
-                Ocjena
+                @Html.DisplayNameFor(model => model.ocjena)
             </th>
             <th>
-                Cijena
+                @Html.DisplayNameFor(model => model.cijena)
             </th>
             <th>
-                Adresa polazišta
+                @Html.DisplayNameFor(model => model.adresaPolazista)
             </th>
             <th>
-                Adresa odredišta
+                @Html.DisplayNameFor(model => model.adresaDolazista)
             </th>
             <th>
-                Prevoznik
+                @Html.DisplayNameFor(model => model.Klijent)
             </th>
             <th>
-                Vozilo
-            </th>
-            <th>
-                Klijent
-            </th>
-            <th>
-                Vozač
+                @Html.DisplayNameFor(model => model.Vozac)
             </th>
             <th></th>
         </tr>
@@ -64,27 +55,15 @@
                 @Html.DisplayFor(modelItem => item.adresaDolazista)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Firma.id)
+                @Html.DisplayFor(modelItem => item.Klijent.adresa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vozilo.id)
+                @Html.DisplayFor(modelItem => item.Vozac.adresa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Klijent.id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vozac.id)
-            </td>
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.id">Uredi</a>
-                    <nobr>|</nobr>
-                    <a asp-action="Details" asp-route-id="@item.id">Detalji</a>
-                    <nobr>|</nobr>
-                    <a asp-action="Delete" asp-route-id="@item.id">Obriši</a>
-                    <nobr>|</nobr>
-                }
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
 }

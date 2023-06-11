@@ -25,6 +25,12 @@
                 @Html.DisplayNameFor(model => model.ykord)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Firma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vozilo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.spol)
             </th>
             <th>
@@ -68,6 +74,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ykord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firma.adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vozilo.model)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.spol)

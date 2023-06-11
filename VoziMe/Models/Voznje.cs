@@ -12,18 +12,12 @@ namespace VoziMe.Models {
         public int vozacId { get; set; }
         [ForeignKey("Klijent")]
         public int korisnikId { get; set; }
-        [ForeignKey("Firma")]
-        public int firmaId { get; set; }
-        [ForeignKey("Vozilo")]
-        public int voziloId { get; set; }
         public DateTime vrijeme { get; set; }
         public int ocjena { get; set; }
         public decimal cijena { get; set; }
         public string adresaPolazista { get; set; }
         public string adresaDolazista { get; set; }
 
-        public Firma Firma { get; set; }
-        public Vozilo Vozilo { get; set; }
         public Klijent Klijent { get; set; }
         public Vozac Vozac { get; set; }
     }
