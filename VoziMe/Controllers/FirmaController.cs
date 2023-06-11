@@ -48,7 +48,6 @@ namespace VoziMe.Controllers
         }
 
         // GET: Firma/Create
-        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -59,7 +58,6 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("id,ime,lozinka,mailAdresa,brojTelefona,adresa,odgovornaOsoba")] Firma firma)
         {
             if (ModelState.IsValid)

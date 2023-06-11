@@ -48,7 +48,6 @@ namespace VoziMe.Controllers
         }
 
         // GET: Klijent/Create
-        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Create()
         {
             if(klijentLokalno != null){ // Ukoliko je vec unio podatke
@@ -62,7 +61,6 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator, Korisnik")]
         public async Task<IActionResult> Create([Bind("ocjena,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Klijent klijent)
         {
             if (ModelState.IsValid)

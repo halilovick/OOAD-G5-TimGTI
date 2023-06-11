@@ -52,7 +52,6 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac/Create
-        [Authorize(Roles = "Administrator, Vozac")]
         public IActionResult Create()
         {
             ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa");
@@ -65,7 +64,6 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Create([Bind("firmaId,voziloId,brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (ModelState.IsValid)

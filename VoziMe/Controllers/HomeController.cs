@@ -31,7 +31,6 @@ namespace VoziMe.Controllers {
             _signInManager = signInManager;
         }
 
-        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Index() {
             return View();
         }
