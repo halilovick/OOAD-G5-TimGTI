@@ -63,6 +63,7 @@ namespace VoziMe.Controllers {
         // GET: Voznje
         [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma, Klijent")]
         public async Task<IActionResult> Index() {
+            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
             var applicationDbContext = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
             return View(await applicationDbContext.ToListAsync());
         }
