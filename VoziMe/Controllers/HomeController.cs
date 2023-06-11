@@ -66,7 +66,6 @@ namespace VoziMe.Controllers {
                     var userASP = await _userManager.GetUserAsync(User);
                     Console.WriteLine(userASP.Email);
                     await _userManager.AddToRoleAsync(userASP, "Korisnik");
-                    //return Task.FromResult<IActionResult>(RedirectToAction("Index"));
                     await _signInManager.RefreshSignInAsync(userASP);
                     return RedirectToAction("Index");
                 }
