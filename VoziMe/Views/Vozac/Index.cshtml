@@ -1,55 +1,80 @@
 ﻿@model IEnumerable<VoziMe.Models.Vozac>
 
 @{
-    ViewData["Title"] = "Vozači";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Vozači</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Dodaj vozača</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Ime
+                @Html.DisplayNameFor(model => model.brojVozackeDozvole)
             </th>
             <th>
-                Prezime
+                @Html.DisplayNameFor(model => model.ocjena)
             </th>
             <th>
-                Korisničko ime
+                @Html.DisplayNameFor(model => model.xkord)
             </th>
             <th>
-                Lozinka
+                @Html.DisplayNameFor(model => model.ykord)
             </th>
             <th>
-                Mail adresa
+                @Html.DisplayNameFor(model => model.spol)
             </th>
             <th>
-                Spol
+                @Html.DisplayNameFor(model => model.datumRodjenja)
             </th>
             <th>
-                Datum rodjenja
+                @Html.DisplayNameFor(model => model.ime)
             </th>
             <th>
-                Adresa
+                @Html.DisplayNameFor(model => model.prezime)
             </th>
             <th>
-                Broj telefona
+                @Html.DisplayNameFor(model => model.korisnickoIme)
             </th>
             <th>
-                Broj vozačke dozvole
+                @Html.DisplayNameFor(model => model.lozinka)
             </th>
             <th>
-                Ocjena
+                @Html.DisplayNameFor(model => model.mailAdresa)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.brojTelefona)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.brojVozackeDozvole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ocjena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.xkord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ykord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.spol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datumRodjenja)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ime)
             </td>
@@ -66,27 +91,15 @@
                 @Html.DisplayFor(modelItem => item.mailAdresa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.spol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.datumRodjenja)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.adresa)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.brojTelefona)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.brojVozackeDozvole)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ocjena)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.id">Uredi</a> |
-                    <a asp-action="Details" asp-route-id="@item.id">Detalji</a> |
-                    <a asp-action="Delete" asp-route-id="@item.id">Obriši</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
 }

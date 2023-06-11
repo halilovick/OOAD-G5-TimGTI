@@ -54,7 +54,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("brojVozackeDozvole,ocjena,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
+        public async Task<IActionResult> Create([Bind("brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("brojVozackeDozvole,ocjena,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
+        public async Task<IActionResult> Edit(int id, [Bind("brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (id != vozac.id)
             {
