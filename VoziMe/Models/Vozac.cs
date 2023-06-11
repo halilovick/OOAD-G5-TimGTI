@@ -14,7 +14,8 @@ namespace VoziMe.Models
 
         [Range(1, 5, ErrorMessage = "Ocjena mora biti između 1 i 5.")]
         public int ocjena { get; set; }
-
-        //public Tuple<double, double> trenuntaLokacija { get; set; } 
+            
+        public double xkord { get; set; }
+        public double ykord { get; set; }
     }
 }

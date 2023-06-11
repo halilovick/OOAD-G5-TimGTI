@@ -13,22 +13,20 @@
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="margin-right: 10px;">
         <h3>Vaša adresa:</h3>
-        <input type="text" onchange="inputChanged()" id="location" name="location" readonly>
-        <button class="btn-outline-success" onclick="getLocation()">Get location</button>
+        <input class="form-control" type="text" onchange="inputChanged()" id="location" name="location" readonly>
+        <button class="btn btn-outline-success btn-sm" style="margin-top: 10px;" onclick="getLocation()">Get location</button>
     </div>
-    <div style="margin-left: 20px;">
+    <div style="margin-left: 20px; align-self: start;">
         <h3>Gdje putujete?</h3>
-        <input type="text" onchange="inputChanged()" id="destination" name="destination">
+        <input class="form-control" type="text" onchange="inputChanged()" id="destination" name="destination">
     </div>
 </div>
-
-<br />
 
 <div style="display: flex; flex-direction: column; align-items: center;">
     <form action="Voznje/OrderRide" method="post">
         <input type="hidden" id="locationInput" name="locationValue" value="">
         <input type="hidden" id="destinationInput" name="destinationValue" value="">
-        <button type="submit" onclick="showRideDetails()">Order Ride</button>
+        <button class="btn btn-primary btn-lg" onclick="showRideDetails()">Order Ride</button>
     </form>
 </div>
 
