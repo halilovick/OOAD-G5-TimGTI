@@ -2,18 +2,42 @@
     .form-group {
         margin-bottom: 20px;
     }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: max-content;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .create-button-container {
+        text-align: center;
+    }
+
+    .create-button {
+        padding: 10px 20px;
+        font-size: 18px;
+        width: 5cm
+    }
+
 </style>
+
 @model VoziMe.Models.Klijent
 
 @{
     ViewData["Title"] = "Create";
 }
+ 
 
 <h1>Unesite vaše podatke</h1>
 
 <hr />
 
-<div class="row">
+   <div class="form-container">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -80,12 +104,13 @@
                 <span asp-validation-for="ocjena" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" id="createButton" onclick="createClick()" />
+            <div class="form-group create-button-container">
+                <input type="submit" value="Kreiraj račun" class="btn btn-primary create-button" id="createButton" onclick="createClick()" />
             </div>
         </form>
     </div>
 </div>
+
 
 @section Scripts {
     @{
