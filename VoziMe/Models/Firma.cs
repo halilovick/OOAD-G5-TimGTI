@@ -16,8 +16,8 @@ namespace VoziMe.Models {
 
         [Required(ErrorMessage = "Broj telefona je obavezan.")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Broj telefona može sadržavati samo brojeve.")]
-        public string mailAdresa { get; set; }
         public string brojTelefona { get; set; }
+        public string mailAdresa { get; set; }
 
         [Required(ErrorMessage = "Adresa je obavezna.")]
         public string adresa { get; set; }
