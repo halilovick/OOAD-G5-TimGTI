@@ -20,6 +20,8 @@ namespace VoziMe.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> OrderRide(string locationValue, string destinationValue) {
+            if(User.Identity.IsAuthenticated == false) return RedirectToPage("/Account/Login", new { area = "Identity" });
+            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
             // hardkodirati trenutne lokacije vozaca
             // implementirati da pogleda sve vozace i pronadje najblizeg
             // cijenu izracunati preko udaljenosti
@@ -63,9 +65,17 @@ namespace VoziMe.Controllers {
         // GET: Voznje
         [Authorize(Roles = "Administrator, Korisnik, Vozac, Firma, Klijent")]
         public async Task<IActionResult> Index() {
-            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
-            var applicationDbContext = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext1 = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
+            //var applicationDbContext2 = _context.Voznje.Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
+
+            if (KlijentController.klijentLokalno != null)
+            {
+                return View(await _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Vozilo).Include(v => v.Klijent).Include(v => v.Vozac).ToListAsync());
+            } else if (User.IsInRole("Administrator"))
+            {
+                return View(await _context.Voznje.Include(v => v.Firma).Include(v => v.Vozilo).Include(v => v.Klijent).Include(v => v.Vozac).ToListAsync());
+            }
+            return RedirectToAction("Create", "Klijent");
         }
 
         // GET: Voznje/Details/5
