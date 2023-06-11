@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,18 +31,22 @@ namespace VoziMe.Controllers {
             _signInManager = signInManager;
         }
 
+        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Index() {
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Privacy() {
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Onama()
         {
             return View();
         }
+        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Podrska()
         {
             return View();
@@ -58,14 +64,25 @@ namespace VoziMe.Controllers {
         public async Task<IActionResult> Login(string email, string password)
         {
             var useri = _context.Klijent.ToList();
+            var vozaci = _context.Vozac.ToList();
             foreach (Klijent user in useri)
             {
                 if (user.mailAdresa == email && user.lozinka == password)
                 {
                     KlijentController.klijentLokalno = user;
                     var userASP = await _userManager.GetUserAsync(User);
-                    Console.WriteLine(userASP.Email);
                     await _userManager.AddToRoleAsync(userASP, "Korisnik");
+                    await _signInManager.RefreshSignInAsync(userASP);
+                    return RedirectToAction("Index");
+                }
+            }
+            foreach (Vozac vozac in vozaci)
+            {
+                if (vozac.mailAdresa == email && vozac.lozinka == password)
+                {
+                    VozacController.vozacLokalno = vozac;
+                    var userASP = await _userManager.GetUserAsync(User);
+                    await _userManager.AddToRoleAsync(userASP, "Vozac");
                     await _signInManager.RefreshSignInAsync(userASP);
                     return RedirectToAction("Index");
                 }

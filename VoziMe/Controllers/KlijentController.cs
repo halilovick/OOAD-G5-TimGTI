@@ -29,6 +29,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Klijent/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +48,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Klijent/Create
+        [Authorize(Roles = "Administrator, Korisnik")]
         public IActionResult Create()
         {
             if(klijentLokalno != null){ // Ukoliko je vec unio podatke
@@ -60,6 +62,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Korisnik")]
         public async Task<IActionResult> Create([Bind("ocjena,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Klijent klijent)
         {
             if (ModelState.IsValid)
@@ -96,6 +99,7 @@ namespace VoziMe.Controllers
         [Authorize(Roles = "Administrator, Korisnik")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Korisnik")]
         public async Task<IActionResult> Edit(int id, [Bind("ocjena,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Klijent klijent)
         {
             if (id != klijent.id)
@@ -148,6 +152,7 @@ namespace VoziMe.Controllers
         // POST: Klijent/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var klijent = await _context.Klijent.FindAsync(id);

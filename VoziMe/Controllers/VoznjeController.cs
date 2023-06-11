@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -79,6 +81,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Voznje.Include(v => v.Klijent).Include(v => v.Vozac);
@@ -86,6 +89,8 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Details/5
+        
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -106,6 +111,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Create
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public IActionResult Create()
         {
             ViewData["korisnikId"] = new SelectList(_context.Klijent, "id", "adresa");
@@ -118,6 +124,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public async Task<IActionResult> Create([Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje)
         {
             if (ModelState.IsValid)
@@ -132,6 +139,8 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Edit/5
+        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -154,6 +163,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public async Task<IActionResult> Edit(int id, [Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje)
         {
             if (id != voznje.id)
@@ -187,6 +197,8 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Delete/5
+        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -209,6 +221,7 @@ namespace VoziMe.Controllers
         // POST: Voznje/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Korisnik, Vozac")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var voznje = await _context.Voznje.FindAsync(id);

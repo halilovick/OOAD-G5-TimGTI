@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,7 @@ namespace VoziMe.Controllers
     public class VozacController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public static Vozac vozacLokalno;
 
         public VozacController(ApplicationDbContext context)
         {
@@ -20,6 +23,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Vozac.Include(v => v.Firma).Include(v => v.Vozilo);
@@ -27,6 +31,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac/Details/5
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +52,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac/Create
+        [Authorize(Roles = "Administrator, Vozac")]
         public IActionResult Create()
         {
             ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa");
@@ -59,6 +65,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Create([Bind("firmaId,voziloId,brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (ModelState.IsValid)
@@ -73,6 +80,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac/Edit/5
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +103,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Edit(int id, [Bind("firmaId,voziloId,brojVozackeDozvole,ocjena,xkord,ykord,id,spol,datumRodjenja,ime,prezime,korisnickoIme,lozinka,mailAdresa,adresa,brojTelefona")] Vozac vozac)
         {
             if (id != vozac.id)
@@ -128,6 +137,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozac/Delete/5
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +160,7 @@ namespace VoziMe.Controllers
         // POST: Vozac/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Vozac")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var vozac = await _context.Vozac.FindAsync(id);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +22,14 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozilo
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Vozilo.ToListAsync());
         }
 
         // GET: Vozilo/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +48,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozilo/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +59,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("id,proizvodjac,model,godinaProizvodnje,registarskaOznaka,boja,brojSjedista")] Vozilo vozilo)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozilo/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +93,7 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("id,proizvodjac,model,godinaProizvodnje,registarskaOznaka,boja,brojSjedista")] Vozilo vozilo)
         {
             if (id != vozilo.id)
@@ -117,6 +125,8 @@ namespace VoziMe.Controllers
         }
 
         // GET: Vozilo/Delete/5
+        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +147,7 @@ namespace VoziMe.Controllers
         // POST: Vozilo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var vozilo = await _context.Vozilo.FindAsync(id);
