@@ -8,14 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using VoziMe.Data;
 using VoziMe.Models;
 
-namespace VoziMe.Controllers
-{
-    public class VoznjeController : Controller
-    {
+namespace VoziMe.Controllers {
+    public class VoznjeController : Controller {
         private readonly ApplicationDbContext _context;
 
-        public VoznjeController(ApplicationDbContext context)
-        {
+        public VoznjeController(ApplicationDbContext context) {
             _context = context;
         }
 
@@ -44,7 +41,9 @@ namespace VoziMe.Controllers
 
             var vozaci = _context.Vozac.ToList();
             var najbliziVozac = vozaci.OrderBy(vozac => Distance(x, y, vozac.xkord, vozac.ykord)).FirstOrDefault();
-            var cijena = 2.5 + 1.5 * Distance(x, y, najbliziVozac.xkord, najbliziVozac.ykord);
+            //var cijena = 2.5 + 1.5 * Distance(x, y, najbliziVozac.xkord, najbliziVozac.ykord);
+            Random r = new Random();
+            var cijena = r.NextDouble() * 20 + 5;
             cijena = Math.Round(cijena, 2);
             var newVoznje = new Voznje {
                 vozacId = najbliziVozac.id,
@@ -79,17 +78,14 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
             var applicationDbContext = _context.Voznje.Include(v => v.Klijent).Include(v => v.Vozac);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Voznje/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Details(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
@@ -97,8 +93,7 @@ namespace VoziMe.Controllers
                 .Include(v => v.Klijent)
                 .Include(v => v.Vozac)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (voznje == null)
-            {
+            if (voznje == null) {
                 return NotFound();
             }
 
@@ -106,8 +101,7 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             ViewData["korisnikId"] = new SelectList(_context.Klijent, "id", "adresa");
             ViewData["vozacId"] = new SelectList(_context.Vozac, "id", "adresa");
             return View();
@@ -118,10 +112,8 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje)
-        {
-            if (ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje) {
+            if (ModelState.IsValid) {
                 _context.Add(voznje);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -132,16 +124,13 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Edit(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var voznje = await _context.Voznje.FindAsync(id);
-            if (voznje == null)
-            {
+            if (voznje == null) {
                 return NotFound();
             }
             ViewData["korisnikId"] = new SelectList(_context.Klijent, "id", "adresa", voznje.korisnikId);
@@ -154,28 +143,19 @@ namespace VoziMe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje)
-        {
-            if (id != voznje.id)
-            {
+        public async Task<IActionResult> Edit(int id, [Bind("id,vozacId,korisnikId,vrijeme,ocjena,cijena,adresaPolazista,adresaDolazista")] Voznje voznje) {
+            if (id != voznje.id) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(voznje);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VoznjeExists(voznje.id))
-                    {
+                } catch (DbUpdateConcurrencyException) {
+                    if (!VoznjeExists(voznje.id)) {
                         return NotFound();
-                    }
-                    else
-                    {
+                    } else {
                         throw;
                     }
                 }
@@ -187,10 +167,8 @@ namespace VoziMe.Controllers
         }
 
         // GET: Voznje/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Delete(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
@@ -198,8 +176,7 @@ namespace VoziMe.Controllers
                 .Include(v => v.Klijent)
                 .Include(v => v.Vozac)
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (voznje == null)
-            {
+            if (voznje == null) {
                 return NotFound();
             }
 
@@ -209,16 +186,14 @@ namespace VoziMe.Controllers
         // POST: Voznje/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(int id) {
             var voznje = await _context.Voznje.FindAsync(id);
             _context.Voznje.Remove(voznje);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VoznjeExists(int id)
-        {
+        private bool VoznjeExists(int id) {
             return _context.Voznje.Any(e => e.id == id);
         }
     }
