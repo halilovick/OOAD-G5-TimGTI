@@ -1,11 +1,40 @@
-﻿@model VoziMe.Models.Vozac
+﻿<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: max-content;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .create-button-container {
+        text-align: center;
+    }
+
+    .create-button {
+        padding: 10px 20px;
+        font-size: 18px;
+        width: 5cm
+    }
+
+</style>
+
+@model VoziMe.Models.Vozac
 
 @{
     ViewData["Title"] = "Napravi račun";
 }
 
+<h1>Unesite vaše podatke</h1>
 <hr />
-<div class="row">
+<div class="form-container">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -84,8 +113,8 @@
                 <input asp-for="ykord" class="form-control" />
                 <span asp-validation-for="ykord" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group create-button-container">
+                <input type="submit" value="Kreiraj račun" class="btn btn-primary" />
             </div>
         </form>
     </div>

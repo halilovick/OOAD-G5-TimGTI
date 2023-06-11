@@ -25,7 +25,11 @@ namespace VoziMe.Controllers
         // GET: Vozac
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Vozac.Include(v => v.Firma).Include(v => v.Vozilo);
+            if (User.IsInRole("Administrator"))
+            {
+                return View(await _context.Vozac.Include(v => v.Firma).Include(v => v.Vozilo).ToListAsync());
+            }
+            var applicationDbContext = _context.Vozac.Where(v => v.id == VozacController.vozacLokalno.id).Include(v => v.Firma).Include(v => v.Vozilo);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -55,6 +59,10 @@ namespace VoziMe.Controllers
         {
             ViewData["firmaId"] = new SelectList(_context.Firma, "id", "adresa");
             ViewData["voziloId"] = new SelectList(_context.Vozilo, "id", "model");
+            if (vozacLokalno != null)
+            { // Ukoliko je vec unio podatke
+                return RedirectToAction("Edit", "Vozac", new { id = vozacLokalno.id });
+            }
             return View();
         }
 

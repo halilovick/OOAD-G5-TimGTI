@@ -36,7 +36,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Podrska">Podrska</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Voznje" asp-action="Index">Voznje</a>
@@ -60,7 +60,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Voznje" asp-action="Index">Historija voznji</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Klijent" asp-action="Create">Moj nalog</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Vozac" asp-action="Create">Moj nalog</a>
                             </li>
                         }
                     </ul>

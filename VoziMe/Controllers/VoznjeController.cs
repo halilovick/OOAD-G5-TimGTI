@@ -80,9 +80,21 @@ namespace VoziMe.Controllers {
 
         // GET: Voznje
         public async Task<IActionResult> Index() {
-            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
-            var applicationDbContext = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Klijent).Include(v => v.Vozac);
-            return View(await applicationDbContext.ToListAsync());
+            //if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
+            if (KlijentController.klijentLokalno != null)
+            {
+                var applicationDbContext = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Klijent).Include(v => v.Vozac);
+                return View(await applicationDbContext.ToListAsync());
+            } else if(VozacController.vozacLokalno != null)
+            {
+                var applicationDbContext = _context.Voznje.Where(v => v.vozacId == VozacController.vozacLokalno.id).Include(v => v.Klijent).Include(v => v.Vozac);
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else if (User.IsInRole("Administrator"))
+            {
+                return View(await _context.Voznje.Include(v => v.Klijent).Include(v => v.Vozac).ToListAsync());
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Voznje/Details/5
