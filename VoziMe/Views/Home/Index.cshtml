@@ -7,6 +7,14 @@
         display: flex;
         justify-content: center;
     }
+
+ 
+    #myMap {
+        position: relative;
+        width: 1300px;
+        height: 400px;
+        border: 6px solid white;
+    }
 </style>
 
 
@@ -14,7 +22,7 @@
     <div style="margin-right: 10px;">
         <h3>Vaša adresa:</h3>
         <input class="form-control" type="text" onchange="inputChanged()" id="location" name="location" readonly>
-        <button class="btn btn-outline-success btn-sm" style="margin-top: 10px;" onclick="getLocation()">Get location</button>
+        <button class="btn btn-outline-success btn-sm" style="margin-top: 10px;" onclick="getLocation()">Vaša Trenutna lokacija</button>
     </div>
     <div style="margin-left: 20px; align-self: start;">
         <h3>Gdje putujete?</h3>
@@ -26,11 +34,11 @@
     <form action="Voznje/OrderRide" method="post">
         <input type="hidden" id="locationInput" name="locationValue" value="">
         <input type="hidden" id="destinationInput" name="destinationValue" value="">
-        <button class="btn btn-primary btn-lg" onclick="showRideDetails()">Order Ride</button>
+        <button class="btn btn-primary btn-lg" onclick="showRideDetails()">Naruči vožnju</button>
     </form>
 </div>
 
-<div class="border-3" style="margin-top: 2%; margin-bottom: 2%">
+<div  style="margin-top: 2%; margin-bottom: 2%">
     <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
 </div>
 
