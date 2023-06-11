@@ -31,7 +31,7 @@
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: center;">
-    <form id="rideForm" action="Voznje/OrderRide" method="post">
+    <form id="rideForm" action="@Url.Action("OrderRide", "Voznje")" method="post">
         <input type="hidden" id="locationInput" name="locationValue" value="">
         <input type="hidden" id="destinationInput" name="destinationValue" value="">
         <input type="hidden" id="xcoord" name="xcoord" value="">

@@ -32,12 +32,6 @@
                 Adresa odredišta
             </th>
             <th>
-                Prevoznik
-            </th>
-            <th>
-                Vozilo
-            </th>
-            <th>
                 Klijent
             </th>
             <th>
@@ -65,10 +59,10 @@
                 @Html.DisplayFor(modelItem => item.adresaDolazista)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Klijent.adresa)
+                @Html.DisplayFor(modelItem => item.Klijent.ime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vozac.adresa)
+                @Html.DisplayFor(modelItem => item.Vozac.ime)
             </td>
                 <td>
                     @if (User.IsInRole("Administrator"))
