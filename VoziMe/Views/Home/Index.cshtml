@@ -13,21 +13,23 @@
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="margin-right: 10px;">
         <h3>Vaša adresa:</h3>
-        <input type="text" id="startLocation" name="startLocation" readonly>
+        <input type="text" onchange="inputChanged()" id="location" name="location" readonly>
         <button onclick="getLocation()">Get location</button>
     </div>
     <div style="margin-left: 20px;">
         <h3>Gdje putujete?</h3>
-        <input type="text" id="destination" name="destination">
+        <input type="text" onchange="inputChanged()" id="destination" name="destination">
     </div>
 </div>
 
 <br />
 
 <div style="display: flex; flex-direction: column; align-items: center;">
-    <div>
-        <button id="order-ride-button" onclick="showRideDetails()" type="submit" style="padding: 10px 20px; background-color: #00d0ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Naruči vožnju!</button>
-    </div>
+    <form action="Voznje/OrderRide" method="post">
+        <input type="hidden" id="locationInput" name="locationValue" value="">
+        <input type="hidden" id="destinationInput" name="destinationValue" value="">
+        <button type="submit" onclick="showRideDetails()">Order Ride</button>
+    </form>
 </div>
 
 <div style="margin-top: 2%; margin-bottom: 2%">
@@ -39,6 +41,8 @@
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 
 <script type='text/javascript'>
+
+
     function GetMap() {
         var map = new Microsoft.Maps.Map('#myMap', {
             credentials: 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf',
@@ -175,7 +179,7 @@
             if (destinationValue === "" || locationValue === "") {
                 alert('Ni jedno polje ne može biti prazno!');
             } else {
-                alert('Vožnja naručena!');
+
             }
         });
     }
@@ -194,12 +198,13 @@
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(convertCoordinates);
+            //show location on map
         }
     }
 
     function convertCoordinates(position) {
         var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude; 
+        var longitude = position.coords.longitude;
 
         var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf';
 
@@ -209,85 +214,22 @@
             .then(response => response.json())
             .then(data => {
                 var address = data.resourceSets[0].resources[0].address.formattedAddress;
-                document.getElementById('startLocation').value = address;
+                document.getElementById('location').value = address;
+                inputChanged()
             })
             .catch(error => console.log(error));
     }
-    function showRideDetails() {
-        var startLocation = document.getElementById("startLocation").value;
-        var destination = document.getElementById("destination").value;
-        if (destination === "" || startLocation === "") return;
 
-        // implementirat tako da izvuce random vozaca iz baze
-        var driverName = "Aaa";
-        var carModel = "Volkswagen Passat";
-        var licensePlate = "E90-M-775";
-
-        var detailsContainer = document.getElementById("rideDetails");
-        detailsContainer.innerHTML = `
-            <h3>Detalji o vašem vozaču:</h3>
-            <p>Ime: ${driverName}</p>
-            <p>Automobil: ${carModel}</p>
-            <p>Registracijske oznake: ${licensePlate}</p>
-            <h3>Detalji o vožnji:</h3>
-            <p>Adresa polaska: ${startLocation}</p>
-            <p>Adresa odredišta: ${destination}</p>
-        `;
-
-        detailsContainer.scrollIntoView();
-
-        var rideDetails = {
-            startLocation: startLocation,
-            destination: destination
-        };
-
-        fetch('/api/voznje/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(rideDetails)
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Clear the input fields or perform any other necessary actions
-                    document.getElementById("startLocation").value = "";
-                    document.getElementById("destination").value = "";
-                    // ... any other code you want to execute after successful ride creation
-                }
-            })
-            .catch(error => {
-                // Handle any errors that occur during the HTTP request
-                console.error('Error:', error);
-            });
+    function inputChanged() {
+        var loc = document.getElementById("location").value;
+        var dest = document.getElementById("destination").value;
+        document.getElementById("locationInput").value = loc;
+        document.getElementById("destinationInput").value = dest;
+        console.log("Changed location and destination to: ");
+        console.log(document.getElementById("locationInput").value + ", " + document.getElementById("destinationInput").value);
     }
 
+    function showRideDetails() {
+    }
 
-        
-        /*$.ajax({
-            url: '/Voznje/Create',
-            type: 'POST',
-            data: {
-                vozacId: '1',
-                korisnikId: '2',
-                firmaId: '1',
-                voziloId: '1',
-                vrijeme: null,
-                ocjena: 5,
-                cijena: 10,
-                adresaPolazista: 'Start Address',
-                adresaDolazista: 'End Address'
-            },
-            success: function (response) {
-                // Handle success response
-                console.log('Ride added successfully!');
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.log('Error adding ride:', error);
-                console.log('Error adding ride:', status);
-                console.log('Error adding ride:', xhr);
-            }
-        });*/
-    
 </script>

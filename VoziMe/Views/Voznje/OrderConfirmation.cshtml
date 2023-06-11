@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var vozac = ViewBag.Vozac as Vozac;
+    var firma = ViewBag.Firma as Firma;
+    var klijent = ViewBag.Klijent as Klijent;
+    var vozilo = ViewBag.Vozilo as Vozilo;
+}
+@model Voznje
+<h2>Order Confirmation</h2>
+
+<p>Order details:</p>
+<p>ID: @Model.id</p>
+<p>Vozac ID: @Model.vozacId (@vozac.ime) </p>
+<p>Korisnik ID: @Model.korisnikId (@klijent.ime)</p>
+<p>Firma ID: @Model.firmaId (@firma.ime)</p>
+<p>Vozilo ID: @Model.voziloId (@vozilo.proizvodjac, @vozilo.model)</p>
+<p>Vrijeme: @Model.vrijeme</p>
+<p>Ocjena: @Model.ocjena</p>
+<p>Cijena: @Model.cijena</p>
+<p>Adresa polaska: @Model.adresaPolazista</p>
+<p>Adresa dolaska: @Model.adresaDolazista</p>
+<!-- Display other attributes as needed -->
