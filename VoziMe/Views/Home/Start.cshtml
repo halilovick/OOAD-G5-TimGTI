@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Start";
+}
+
+<style>
+    .container {
+        text-align: center;
+    }
+
+    .options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+        .options .btn {
+            margin: 10px;
+            flex-grow: 1;
+        }
+
+    .login-btn {
+        display: flex;
+        justify-content: center;
+    }
+
+        .login-btn a {
+            padding: 20px 40px;
+            font-size: 30px;
+        }
+
+    .spacer {
+        margin-top: 50px;
+    }
+
+    .spacerr {
+        margin-top: 270px;
+    }
+</style>
+
+<div class="spacerr"></div>
+
+<div class="container">
+    <h1>Dobro došli na VoziMe</h1>
+    <h4>Izaberite jednu od ponuđenih opcija registracije:</h4>
+
+    <div class="options">
+        <a href="@Url.Action("Create", "Klijent", new { accountType = "user" })" class="btn btn-primary btn-lg">Korisnik</a>
+        <a href="@Url.Action("Create", "Vozac", new { accountType = "driver" })" class="btn btn-primary btn-lg">Vozač</a>
+        <a href="@Url.Action("Create", "Firma", new { accountType = "company" })" class="btn btn-primary btn-lg">Kompanija</a>
+    </div>
+    <div class="spacer"></div>
+
+    <h5>Već imate kreiran korisnički račun?</h5>
+    <div class="login-btn">
+        <a href="@Url.Action("Login", "Home")" class="btn btn-primary btn-lg">Prijavite se</a>
+    </div>
+</div>
