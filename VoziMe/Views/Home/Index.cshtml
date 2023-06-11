@@ -8,7 +8,7 @@
         justify-content: center;
     }
 
- 
+
     #myMap {
         position: relative;
         width: 1300px;
@@ -31,14 +31,16 @@
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: center;">
-    <form action="Voznje/OrderRide" method="post">
+    <form id="rideForm" action="Voznje/OrderRide" method="post">
         <input type="hidden" id="locationInput" name="locationValue" value="">
         <input type="hidden" id="destinationInput" name="destinationValue" value="">
-        <button class="btn btn-primary btn-lg" onclick="showRideDetails()">Naruči vožnju</button>
+        <input type="hidden" id="xcoord" name="xcoord" value="">
+        <input type="hidden" id="ycoord" name="ycoord" value="">
     </form>
+    <button class="btn btn-primary btn-lg" onclick="showRideDetails()">Naruči vožnju</button>
 </div>
 
-<div  style="margin-top: 2%; margin-bottom: 2%">
+<div style="margin-top: 2%; margin-bottom: 2%">
     <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
 </div>
 
@@ -212,6 +214,9 @@
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
 
+        document.getElementById("xcoord").value = latitude;
+        document.getElementById("ycoord").value = longitude;
+
         var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf';
 
         var apiUrl = `https://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?key=${apiKey}`;
@@ -236,6 +241,11 @@
     }
 
     function showRideDetails() {
+        if (document.getElementById("locationInput").value == 0 || document.getElementById("destinationInput").value == 0) {
+            alert("Sva polja moraju biti ispunjena!")
+            return;
+        }
+        document.getElementById("rideForm").submit();
     }
 
 </script>

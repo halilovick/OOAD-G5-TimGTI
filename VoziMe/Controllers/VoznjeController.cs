@@ -18,23 +18,41 @@ namespace VoziMe.Controllers {
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> OrderRide(string locationValue, string destinationValue) {
-            if(User.Identity.IsAuthenticated == false) return RedirectToPage("/Account/Login", new { area = "Identity" });
-            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
-            // hardkodirati trenutne lokacije vozaca
-            // implementirati da pogleda sve vozace i pronadje najblizeg
-            // cijenu izracunati preko udaljenosti
+        public double Distance(double lat1, double lon1, double lat2, double lon2) {
+            var r = 6371;
+            
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
 
-            // uzeti id korisnika preko neke static varijable (trenutno ulogovani korisnik)
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return r * c;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OrderRide(string locationValue, string destinationValue, string xcoord, string ycoord) {
+            if (User.Identity.IsAuthenticated == false) return RedirectToPage("/Account/Login", new { area = "Identity" });
+            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
+
+            double x = Double.Parse(xcoord);
+            double y = Double.Parse(ycoord);
+
+            var vozaci = _context.Vozac.ToList();
+            var najbliziVozac = vozaci.OrderBy(vozac => Distance(x, y, vozac.xkord, vozac.ykord)).FirstOrDefault();
+            var cijena = 2.5 + 1.5 * Distance(x, y, najbliziVozac.xkord, najbliziVozac.ykord);
+            cijena = Math.Round(cijena, 2);
             var newVoznje = new Voznje {
-                vozacId = 1,
-                korisnikId = 2,
+                vozacId = najbliziVozac.id,
+                korisnikId = KlijentController.klijentLokalno.id,
                 firmaId = 1,
                 voziloId = 1,
                 vrijeme = DateTime.Now,
-                ocjena = 5,
-                cijena = 10.99m,
+                ocjena = -1,
+                cijena = (decimal)cijena,
                 adresaPolazista = locationValue,
                 adresaDolazista = destinationValue
             };
@@ -42,7 +60,6 @@ namespace VoziMe.Controllers {
             _context.Voznje.Add(newVoznje);
             await _context.SaveChangesAsync();
 
-            var url = Url.Action("OrderConfirmation", "Voznje", null, Request.Scheme);
             return RedirectToAction(nameof(OrderConfirmation));
         }
 
@@ -68,11 +85,9 @@ namespace VoziMe.Controllers {
             //var applicationDbContext1 = _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
             //var applicationDbContext2 = _context.Voznje.Include(v => v.Firma).Include(v => v.Klijent).Include(v => v.Vozac).Include(v => v.Vozilo);
 
-            if (KlijentController.klijentLokalno != null)
-            {
+            if (KlijentController.klijentLokalno != null) {
                 return View(await _context.Voznje.Where(v => v.korisnikId == KlijentController.klijentLokalno.id).Include(v => v.Firma).Include(v => v.Vozilo).Include(v => v.Klijent).Include(v => v.Vozac).ToListAsync());
-            } else if (User.IsInRole("Administrator"))
-            {
+            } else if (User.IsInRole("Administrator")) {
                 return View(await _context.Voznje.Include(v => v.Firma).Include(v => v.Vozilo).Include(v => v.Klijent).Include(v => v.Vozac).ToListAsync());
             }
             return RedirectToAction("Create", "Klijent");
