@@ -44,15 +44,13 @@
     <div id="myMap" style="position:relative;width:1300px;height:400px;"></div>
 </div>
 
-<div id="rideDetails"></div>
-
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 
 <script type='text/javascript'>
 
-
+    var map;
     function GetMap() {
-        var map = new Microsoft.Maps.Map('#myMap', {
+        map = new Microsoft.Maps.Map('#myMap', {
             credentials: 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf',
             center: new Microsoft.Maps.Location(43.856430, 18.413029),
             mapTypeId: Microsoft.Maps.MapTypeId.aerial,
@@ -78,18 +76,22 @@
         var stajalisteBascarsija = new Microsoft.Maps.Location(43.860680, 18.431423);
         var stajalisteAlipasinoPolje = new Microsoft.Maps.Location(43.844544, 18.347990);
 
-        var pinKosevo = new Microsoft.Maps.Pushpin(stajalisteKosevo);
-        var pinSkenderija = new Microsoft.Maps.Pushpin(stajalisteSkenderija);
-        var pinJezero = new Microsoft.Maps.Pushpin(stajalisteJezero);
-        var pinBreka = new Microsoft.Maps.Pushpin(stajalisteBreka);
-        var pinGrbavica = new Microsoft.Maps.Pushpin(stajalisteGrbavica);
-        var pinCengicVila = new Microsoft.Maps.Pushpin(stajalisteCengicVila);
-        var pinMojmilo = new Microsoft.Maps.Pushpin(stajalisteMojmilo);
-        var pinBucaPotok = new Microsoft.Maps.Pushpin(stajalisteBucaPotok);
-        var pinAerodrom = new Microsoft.Maps.Pushpin(stajalisteAerodrom);
-        var pinOtoka = new Microsoft.Maps.Pushpin(stajalisteOtoka);
-        var pinBascarsija = new Microsoft.Maps.Pushpin(stajalisteBascarsija);
-        var pinAlipasinoPolje = new Microsoft.Maps.Pushpin(stajalisteAlipasinoPolje);
+        var imageUrl = window.location.origin + '/images/taxiicon.png';
+        var iconSize = new Microsoft.Maps.Size(32, 32);
+        var pinOptions = { icon: imageUrl, iconSize: iconSize };
+
+        var pinKosevo = new Microsoft.Maps.Pushpin(stajalisteKosevo, pinOptions);
+        var pinSkenderija = new Microsoft.Maps.Pushpin(stajalisteSkenderija, pinOptions);
+        var pinJezero = new Microsoft.Maps.Pushpin(stajalisteJezero, pinOptions);
+        var pinBreka = new Microsoft.Maps.Pushpin(stajalisteBreka, pinOptions);
+        var pinGrbavica = new Microsoft.Maps.Pushpin(stajalisteGrbavica, pinOptions);
+        var pinCengicVila = new Microsoft.Maps.Pushpin(stajalisteCengicVila, pinOptions);
+        var pinMojmilo = new Microsoft.Maps.Pushpin(stajalisteMojmilo, pinOptions);
+        var pinBucaPotok = new Microsoft.Maps.Pushpin(stajalisteBucaPotok, pinOptions);
+        var pinAerodrom = new Microsoft.Maps.Pushpin(stajalisteAerodrom, pinOptions);
+        var pinOtoka = new Microsoft.Maps.Pushpin(stajalisteOtoka, pinOptions);
+        var pinBascarsija = new Microsoft.Maps.Pushpin(stajalisteBascarsija, pinOptions);
+        var pinAlipasinoPolje = new Microsoft.Maps.Pushpin(stajalisteAlipasinoPolje, pinOptions);
 
         pinKosevo.metadata = {
             title: 'Stajaliste Koševo',
@@ -181,15 +183,6 @@
         var locationField = document.getElementById('startLocation');
         var destinationField = document.getElementById('destination');
 
-        orderRideButton.addEventListener('click', function () {
-            var destinationValue = destinationField.value;
-            var locationValue = locationField.value;
-            if (destinationValue === "" || locationValue === "") {
-                alert('Ni jedno polje ne može biti prazno!');
-            } else {
-
-            }
-        });
     }
 
     function pushpinClicked(e) {
@@ -206,7 +199,6 @@
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(convertCoordinates);
-            //show location on map
         }
     }
 
@@ -216,6 +208,21 @@
 
         document.getElementById("xcoord").value = latitude;
         document.getElementById("ycoord").value = longitude;
+
+        var userLocation = new Microsoft.Maps.Location(latitude, longitude);
+        if (document.getElementById("location").value == "") {
+            var imageUrl = window.location.origin + '/images/usericon.png';
+            var iconSize = new Microsoft.Maps.Size(32, 32);
+            var pinOptions = { icon: imageUrl, iconSize: iconSize };
+            var pinUser = new Microsoft.Maps.Pushpin(userLocation, pinOptions);
+            pinUser.metadata = {
+                title: 'Vaša trenutna lokacija',
+                description: ''
+            };
+            Microsoft.Maps.Events.addHandler(pinUser, 'click', pushpinClicked);
+            map.entities.push(pinUser);
+        }
+        map.setView({ center: userLocation, zoom: 17 });
 
         var apiKey = 'AsUxyaV0r7t7AUCbg7Np-o9B0rCI9YF6t9__7BI0Twj1cduK3ptOL_ZghnV3MmNf';
 

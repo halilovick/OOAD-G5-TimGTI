@@ -36,7 +36,7 @@ namespace VoziMe.Controllers {
         [HttpPost]
         public async Task<IActionResult> OrderRide(string locationValue, string destinationValue, string xcoord, string ycoord) {
             if (User.Identity.IsAuthenticated == false) return RedirectToPage("/Account/Login", new { area = "Identity" });
-            if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
+            //if (KlijentController.klijentLokalno == null) return RedirectToAction("Create", "Klijent");
 
             double x = Double.Parse(xcoord);
             double y = Double.Parse(ycoord);
@@ -47,7 +47,7 @@ namespace VoziMe.Controllers {
             cijena = Math.Round(cijena, 2);
             var newVoznje = new Voznje {
                 vozacId = najbliziVozac.id,
-                korisnikId = KlijentController.klijentLokalno.id,
+                korisnikId = 2,
                 firmaId = 1,
                 voziloId = 1,
                 vrijeme = DateTime.Now,
