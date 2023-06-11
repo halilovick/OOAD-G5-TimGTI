@@ -7,9 +7,9 @@
         <p>Please choose one of the following options:</p>
         
         <div class="options">
-            <a href="@Url.Action("CreateAccount", "Account", new { accountType = "driver" })" class="btn">Create a driver account</a>
-            <a href="@Url.Action("CreateAccount", "Account", new { accountType = "user" })" class="btn">Create a user account</a>
-            <a href="@Url.Action("CreateAccount", "Account", new { accountType = "company" })" class="btn">Create a company account</a>
+            <a href="@Url.Action("Create", "Vozac", new { accountType = "driver" })" class="btn">Create a driver account</a>
+            <a href="@Url.Action("Create", "Klijent", new { accountType = "user" })" class="btn">Create a user account</a>
+            <a href="@Url.Action("Create", "Firma", new { accountType = "company" })" class="btn">Create a company account</a>
             <a href="@Url.Action("Login", "Account")" class="btn">Log in</a>
         </div>
 </div>
