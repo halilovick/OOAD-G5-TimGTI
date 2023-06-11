@@ -1,37 +1,47 @@
 ﻿@model IEnumerable<VoziMe.Models.Voznje>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Historija vožnji";
 }
 
-<h1>Index</h1>
+<h1>Historija vožnji</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Administrator"))
+    {
+        <a asp-action="Create">Dodaj vožnju</a>
+    }
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.vrijeme)
+                Vrijeme
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ocjena)
+                Ocjena
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.cijena)
+                Cijena
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.adresaPolazista)
+                Adresa polazišta
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.adresaDolazista)
+                Adresa odredišta
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Klijent)
+                Prevoznik
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Vozac)
+                Vozilo
+            </th>
+            <th>
+                Klijent
+            </th>
+            <th>
+                Vozač
             </th>
             <th></th>
         </tr>
@@ -60,11 +70,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Vozac.adresa)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.id">Uredi</a>
+                        <nobr>|</nobr>
+                        <a asp-action="Details" asp-route-id="@item.id">Detalji</a>
+                        <nobr>|</nobr>
+                        <a asp-action="Delete" asp-route-id="@item.id">Obriši</a>
+                        <nobr>|</nobr>
+                    }
+                </td>
         </tr>
 }
     </tbody>

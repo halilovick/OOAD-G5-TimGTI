@@ -20,10 +20,6 @@ namespace VoziMe.Controllers {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        /*public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
-        }*/
-
         public HomeController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
@@ -56,6 +52,7 @@ namespace VoziMe.Controllers {
         }
         public IActionResult Login()
         {
+            if(KlijentController.klijentLokalno != null) return RedirectToAction("Index");
             return View();
         }
 
@@ -86,10 +83,10 @@ namespace VoziMe.Controllers {
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Onama");
+            return Error();
         }
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
